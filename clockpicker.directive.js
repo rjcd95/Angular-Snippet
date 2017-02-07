@@ -5,6 +5,7 @@
             var inputelement = $("input", element);
             var modelGetter = parse(attrs["ngModel"]);
             var modelSetter = modelGetter.assign;
+            
             function afterUpdate() {
                 return timeout(function () {
                     var value = modelGetter(scope);
@@ -26,12 +27,15 @@
                     }
                 });
             }
+            
             element.clockpicker({
                 donetext: "Done",
                 autoclose: true,
                 afterDone: afterUpdate
             });
+            
             inputelement.blur(afterUpdate);
+            
             ngModel.$formatters.push(function (value) {
                 if (value) {
                     var time = moment(value, "HH:mm");
