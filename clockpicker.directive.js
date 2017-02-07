@@ -1,8 +1,8 @@
 (function () {
 
     function clockpicker(parse, timeout) {
-        function link(scope, elm, attrs, ngModel) {
-            var inputElm = $("input", elm);
+        function link(scope, element, attrs, ngModel) {
+            var inputelement = $("input", element);
             var modelGetter = parse(attrs["ngModel"]);
             var modelSetter = modelGetter.assign;
             function afterUpdate() {
@@ -11,7 +11,7 @@
                     if (value) {
                         value = moment(value, "HH:mm");                        
                     }
-                    var inputVal = moment(inputElm.val(), "HH:mm");
+                    var inputVal = moment(inputelement.val(), "HH:mm");
                     if (inputVal.isValid()) {
                         if (!value) {
                             modelSetter(scope, inputVal.toDate());
@@ -26,17 +26,17 @@
                     }
                 });
             }
-            elm.clockpicker({
+            element.clockpicker({
                 donetext: "Done",
                 autoclose: true,
                 afterDone: afterUpdate
             });
-            inputElm.blur(afterUpdate);
+            inputelement.blur(afterUpdate);
             ngModel.$formatters.push(function (value) {
                 if (value) {
                     var time = moment(value, "HH:mm");
-                    inputElm.val(moment(time).format("HH:mm"));
-                    inputElm.val();
+                    inputelement.val(moment(time).format("HH:mm"));
+                    inputelement.val();
                 }
                 return value;
             });
